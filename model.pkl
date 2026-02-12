@@ -1,7 +1,0 @@
-# Updated lines 9-11
-try:
-    with open('model.pkl', 'rb') as file:
-        model = pickle.load(file)
-except FileNotFoundError:
-    st.error("The 'model.pkl' file was not found. Please upload it to your GitHub repository.")
-    st.stop() 
