@@ -1,0 +1,4 @@
+import pickle
+# Use the 'model' variable which contains your trained SVM
+with open('model.pkl', 'wb') as f:
+    pickle.dump(model, f)
