@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 
-# Live Demo :   https://diabetes-prediction-rc9us66qzdoqhqt7gerdfx.streamlit.app/
+# 🚀 Live Demo :   
+👉🏻 https://diabetes-prediction-rc9us66qzdoqhqt7gerdfx.streamlit.app/
 # Diabetes Prediction Project
 
 This project uses machine learning models (Logistic Regression and SVM) to predict diabetes based on health indicators like BMI, age, HbA1c, glucose level, and more.
@@ -39,4 +40,5 @@ Diabetes prediction using ML models (Logistic Regression and SVM)
 
 Author - Ajaya
 >>>>>>> ffcc01d9c87b937019f22ea7ffd565951d972548
+
 
