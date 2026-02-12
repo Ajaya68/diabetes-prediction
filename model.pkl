@@ -1,4 +1,9 @@
 import pickle
-# Use the 'model' variable which contains your trained SVM
+from google.colab import files
+
+# Save the SVM model you trained
 with open('model.pkl', 'wb') as f:
     pickle.dump(model, f)
+
+# This will download the file to your computer immediately
+files.download('model.pkl')
