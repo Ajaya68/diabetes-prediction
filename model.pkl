@@ -1,9 +1,7 @@
-import pickle
-from google.colab import files
-
-# Use the 'model' variable which contains your trained SVM
-with open('model.pkl', 'wb') as f:
-    pickle.dump(model, f)
-
-# This downloads the actual file to your computer
-files.download('model.pkl')
+# Updated lines 9-11
+try:
+    with open('model.pkl', 'rb') as file:
+        model = pickle.load(file)
+except FileNotFoundError:
+    st.error("The 'model.pkl' file was not found. Please upload it to your GitHub repository.")
+    st.stop() 
