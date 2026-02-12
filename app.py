@@ -1,59 +1,23 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import pickle
+import numpy as np
 
-# 1. Load the model
-def load_model():
-    with open('model.pkl', 'rb') as file:
-        return pickle.load(file)
+# Load model
+model = pickle.load(open('model.pkl', 'rb'))
 
-model = load_model()
+st.title("Diabetes Prediction App")
 
-# 2. Page Styling
-st.set_page_config(page_title="Diabetes Predictor", page_icon="🩺")
-st.title("🩺 Diabetes Prediction System")
-st.write("Please fill in the patient details below to get a prediction.")
+# Inputs (Order: age, hypertension, heart_disease, bmi, hba1c, glucose, gender, smoking)
+age = st.number_input("Age", value=30.0)
+hypertension = st.selectbox("Hypertension", [0, 1])
+heart_disease = st.selectbox("Heart Disease", [0, 1])
+bmi = st.number_input("BMI", value=25.0)
+hba1c = st.number_input("HbA1c Level", value=5.5)
+glucose = st.number_input("Blood Glucose Level", value=100.0)
+gender = st.selectbox("Gender (0:Female, 1:Male, 2:Other)", [0, 1, 2])
+smoking = st.selectbox("Smoking (0:No Info, 1:current, 2:ever, 3:former, 4:never, 5:not current)", [0, 1, 2, 3, 4, 5])
 
-# 3. Create Input Layout
-col1, col2 = st.columns(2)
-
-with col1:
-    age = st.number_input("Age", min_value=0.0, max_value=120.0, value=30.0)
-    # Using text labels for better UX
-    gender_choice = st.selectbox("Gender", ["Female", "Male", "Other"])
-    hypertension_choice = st.selectbox("Hypertension", ["No", "Yes"])
-    heart_disease_choice = st.selectbox("Heart Disease", ["No", "Yes"])
-
-with col2:
-    bmi = st.number_input("BMI", min_value=10.0, max_value=70.0, value=25.0)
-    hba1c = st.number_input("HbA1c Level", min_value=3.0, max_value=10.0, value=5.5)
-    glucose = st.number_input("Blood Glucose Level", min_value=50.0, max_value=400.0, value=100.0)
-    smoking_choice = st.selectbox("Smoking History", ["never", "No Info", "current", "former", "ever", "not current"])
-
-# 4. Map text labels back to the numbers your model expects
-gender_map = {"Female": 0, "Male": 1, "Other": 2}
-smoking_map = {"No Info": 0, "current": 1, "ever": 2, "former": 3, "never": 4, "not current": 5}
-binary_map = {"No": 0, "Yes": 1}
-
-# 5. Prediction Logic
-if st.button("Run Prediction"):
-    # Feature order MUST match your notebook: age, hypertension, heart_disease, bmi, hba1c, glucose, gender, smoking
-    features = np.array([[
-        age, 
-        binary_map[hypertension_choice], 
-        binary_map[heart_disease_choice], 
-        bmi, 
-        hba1c, 
-        glucose, 
-        gender_map[gender_choice], 
-        smoking_map[smoking_choice]
-    ]])
-
+if st.button("Predict"):
+    features = np.array([[age, hypertension, heart_disease, bmi, hba1c, glucose, gender, smoking]])
     prediction = model.predict(features)
-    
-    st.divider()
-    if prediction[0] == 1:
-        st.error("### Result: High Risk of Diabetes")
-    else:
-        st.success("### Result: Low Risk of Diabetes")
+    st.write("Result: ", "Diabetic" if prediction[0] == 1 else "Not Diabetic")
